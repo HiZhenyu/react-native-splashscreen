@@ -23,10 +23,26 @@ RCT_EXPORT_MODULE(SplashScreen)
     rootView.loadingViewFadeDelay = 0;
     rootView.loadingViewFadeDuration = 0;
     UIImageView *view = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    view.image = [UIImage imageNamed:@"splash"];
-    
+
+    CGRect screenBounds = [UIScreen mainScreen].bounds;
+    CGFloat screenHeight = screenBounds.size.height;
+
+    NSString* imageName = @"LaunchImage";
+
+    if (screenHeight == 480)
+        imageName = [imageName stringByAppendingString:@"-700"];
+    if (screenHeight == 568)
+        imageName = [imageName stringByAppendingString:@"-700-568h"];
+    else if (screenHeight == 667)
+        imageName = [imageName stringByAppendingString:@"-800-667h"];
+    else if (screenHeight == 736)
+        imageName = [imageName stringByAppendingString:@"-800-Portrait-736h"];
+
+
+    view.image = [UIImage imageNamed:imageName];
+
     [[NSNotificationCenter defaultCenter] removeObserver:rootView  name:RCTContentDidAppearNotification object:rootView];
-    
+
     [rootView setLoadingView:view];
 }
 
